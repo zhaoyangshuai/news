@@ -1,6 +1,8 @@
 //1.导包
 const express = require('express');
 const router = require('./router');
+const bodyParser = require('body-parser');
+const session = require('express-session');
 //2.配置，实例化app 对象
 const app = express();
 //登录页的功能实现分析
@@ -10,6 +12,16 @@ app.use('/public',express.static('./public'));
 app.use('/node_modules',express.static('./node_modules'))
 //配置模板引擎包
 app.engine('html', require('express-art-template'));
+//配置body-parser  效果是res多了一个render方法
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+//配置express-session 包
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true
+  }))
 //3.监听各种请求
 app.use(router);
 //4.监听端口，
