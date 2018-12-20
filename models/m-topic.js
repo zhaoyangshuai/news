@@ -11,3 +11,22 @@ exports.findAllTopics = (callback) => {
         callback(null,data);
     })
 }
+exports.addTopic = (body, callback) => {
+    const sqlstr = "INSERT INTO `topics` SET ?";
+    //查找数据库，增加数据信息
+    connection.query(sqlstr, body, (err, data) => {
+        if (err) {
+            return callback(err);
+        }
+        callback(null, data);
+    })
+}
+exports.findTopicById = (topicID, callback) => {
+    const sqlstr = "SELECT *FROM `topics` WHERE id = ?";
+    connection.query(sqlstr, topicID, (err, data) => {
+        if(err) {
+            return callback(err);
+        }
+        callback(null, data)
+    })
+}

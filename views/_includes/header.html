@@ -36,12 +36,13 @@
                 </div>
             </form>
             <ul class="nav navbar-nav navbar-right">
+                {{if user}}
                 <a class="btn btn-default navbar-btn" href="/topic/create">发起</a>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img width="20" height="20" src="../public/img/avatar-max-img.png" alt=""> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-current-user">
-                            当前登录用户:爱谁谁
+                            当前登录用户:{{user.nickname}}
                         </li>
                         <li role="separator" class="divider"></li>
                         <li><a href="#">个人主页</a></li>
@@ -49,11 +50,25 @@
                         <li><a href="/signout">退出</a></li>
                     </ul>
                 </li>
+                {{else}}
                 <a class="btn btn-primary navbar-btn" href="/signin">登录</a>
                 <a class="btn btn-success navbar-btn" href="/signup">注册</a>
+                {{/if}}
             </ul>
         </div>
         <!-- /.navbar-collapse -->
     </div>
     <!-- /.container-fluid -->
 </nav>
+<!-- 这个主要完成的是显示与隐藏功能，如果用户登录了，就能够够在头上看到设置退出标签，没有登录的话就显示登录 注册标签
+思路实现：
+渲染header页面的时候先检测是否有session，如果有的话就出来，没有的话就隐藏 -->
+<!-- 发布新文章功能：
+在header页面上点击发起，就会新渲染一个页面所以步骤有
+1. R 配置路由，点击发起后，路由表示确定
+2. c 为路由增加新的处理方式
+3. v 相应的页面返回给浏览器 -->
+用户退出功能分析：
+点击退出就会向数据库发布暗示
+数据库清空此时的session信息，然后跳转到登录页面
+

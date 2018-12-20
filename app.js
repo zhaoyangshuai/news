@@ -3,6 +3,15 @@ const express = require('express');
 const router = require('./router');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
+const options = {
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: 'root',
+    database: 'news57'
+};
+const sessionStore = new MySQLStore(options);
 //2.配置，实例化app 对象
 const app = express();
 //登录页的功能实现分析
@@ -18,10 +27,12 @@ app.use(bodyParser.urlencoded({
 }));
 //配置express-session 包
 app.use(session({
-    secret: 'keyboard cat',
+    key: 'session_cookie_name',
+    secret: 'session_cookie_secret',
+    store: sessionStore,
     resave: false,
-    saveUninitialized: true
-  }))
+    saveUninitialized: false
+}));
 //3.监听各种请求
 app.use(router);
 //4.监听端口，

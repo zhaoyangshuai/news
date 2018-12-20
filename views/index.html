@@ -20,7 +20,8 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading"><a href="">{{$value.title}}</a></h4>
+                    <h4 class="media-heading"><a href="/topic/detail/{{$value.id}}">{{$value.title}}</a></h4>
+                    <p>{{$value.content}}</p>
                     <p>sueysok 回复了问题 • 2 人关注 • 1 个回复 • 187 次浏览 • 话题创建时间
                     </p>
                 </div>
@@ -53,3 +54,7 @@
 </body>
 
 </html>
+<!-- 渲染话题详情
+1.点击话题的标题，配置标题连接的路由标识
+2.连接数据库，将相应的数据在数据库里找出来
+3.将数据利用模板引擎渲染出来，发送给前端页面 -->

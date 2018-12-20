@@ -29,7 +29,22 @@
     <script src="/node_modules/jquery/dist/jquery.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script>
-        // 处理表单提交
+        // 处理表单提交  发布新文章之后，向数据库总增加 一条文章的信息。
+        // 监听表单的submit事件
+        $('#form').on('submit', function (e) {
+            //组织a标签的默认事件
+            e.preventDefault();
+            //获取表单中填写的信息
+            const formdata = $(this).serialize();
+            //将数据通过ajax请求发送到数据库
+            $.post('/creatTopic', formdata, function (data) {
+                if(data.code === 200){
+                   return location.href = "/";
+                }
+                alert(data.msg);
+               
+            })
+        })
     </script>
 </body>
 

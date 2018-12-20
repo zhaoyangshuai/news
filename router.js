@@ -13,6 +13,10 @@ router
       .get('/signin',c_user.showSignin)
       .post('/signin',c_user.handleSignin)
       .get('/', c_topic.showTopicList)
+      .get('/topic/create', c_topic.showCreatTopic)
+      .post('/creatTopic', c_topic.handleCreatTopic)
+      .get('/signout', c_user.signout)
+      .get('/topic/detail/:topicID', c_topic.showDetail)
 //4.将路由对象导出去。
 module.exports = router;
 //在这个时候就需要去前台来修改相应的app木块的内容了。

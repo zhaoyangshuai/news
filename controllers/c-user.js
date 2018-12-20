@@ -40,6 +40,11 @@ exports.handleSignin = (req,res) => {
         })
     })
 }
+exports.signout = (req,res) => {
+    // 清除此时的session信息，重定向到登录页面
+    delete req.session.user;
+    res.redirect('/signin')
+}
     
    
 
