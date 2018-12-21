@@ -16,13 +16,18 @@
     <section class="container">
         <div class="row">
             <div class="col-md-9">
+                <!-- 假象一个场景，就是如果作者将这篇文章删除了，那么久找不到id所以就被删除，增强用户体验 -->
+                {{if !topic}}
                 <p>此话题不存在或已被删除。</p>
                 <a class="btn btn-success" href="/">返回首页</a>
+                {{else}}
                 <article class="markdown-body">
-                    <h1>话题标题</h1>
-                    <a href="/topic/detail/edit">编辑</a>
-                    <a href="/topic/detail/delete" id="delete_topic">删除</a>
-                    <hr> 话题内容
+                    <h1>{{topic.title}}</h1>
+                    {{if topic.userId === sessionUserId}}
+                    <a href="/topic/{{topic.id}}/edit">编辑</a>
+                    <a href="/topic/detail/{{topic.id}}/delete" id="delete_topic">删除</a>
+                    {{/if}}
+                    <hr> {{topic.content}}
                 </article>
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -48,9 +53,11 @@
                     </div>
                     <button type="submit" class="btn btn-success">回复</button>
                 </form>
+                {{/if}}
             </div>
         </div>
     </section>
+    
     {{include '../_includes/footer.html'}}
     <script src="/node_modules/jquery/dist/jquery.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
@@ -60,3 +67,16 @@
 </body>
 
 </html>
+<!-- 完成编辑和删除的判断工作
+实现思路：
+当当前登录用户的id名字和本文章的id名字一直的情况下就出现该按钮，不一样的时候就隐藏该按钮
+要把当前登录的id名字一起传到模板引擎渲染页面 -->
+<!-- 分析删除功能的实现
+点击删除按钮，然后配置相应的路由
+配置控制器
+操作数据库，组织sql语句，将结果给删除
+跳转到首页 -->
+<!-- 分析编辑功能的实现
+点击编辑安牛逼，配置相应的路由
+配置控制器
+拿到表单中的数据，组织sql语句，将更改的数据放在数据库中 -->

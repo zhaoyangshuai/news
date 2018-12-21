@@ -30,3 +30,13 @@ exports.findTopicById = (topicID, callback) => {
         callback(null, data)
     })
 }
+exports.deleteTopicById = (topicID, callback) => {
+    const sqlstr = "DELETE FROM `topics` WHERE id = ?";
+    connection.query(sqlstr, topicID, (err, data) => {
+        if(err) {
+            return callback(err);
+        }
+        callback(null,data);
+    })
+
+}

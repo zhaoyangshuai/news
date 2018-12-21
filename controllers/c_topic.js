@@ -53,11 +53,54 @@ exports.showDetail = (req, res) => {
     const topicID = req.params.topicID;
     // 根据id值连接数据库找到需要的信息
     M_topic.findTopicById(topicID, (err,data) => {
+        //拿到了数据库中相应id的数据
+        console.log(data[0]);
+        //将拿到的数据渲染在模板引擎中
+        if(err) {
+            return res.render({
+                code:500,
+                msg: '服务器出现了错误'
+            })
+        }
+        res.render("topic/show.html",{
+            //注意后端给的数据是数组，取的时候要注意方法
+            topic:data[0],
+            sessionUserId: req.session.user ? req.session.user.id : 0
+        })
         
     })
-
-
-
-
-    res.render('topic/show.html')
+    // res.render('topic/show.html')
 }
+exports.handleDeleteTopic = (req, res) => {
+    //将相应的id值传来，通过id值操作数据库删除相应的内容
+    //接受到前端传来的动态路由
+    const topicID = req.params.topicID;
+    //操作数据库，将该条信息删除了
+    M_topic.deleteTopicById(topicID, (err, data) => {
+        if(err) {
+            return res.send({
+                code:500,
+                msg:'服务器出现错误了'
+            })
+        }
+        res.redirect("/");
+    })
+}
+    exports.showEdit = (req, res) => {
+        // 1 获取话题id
+        var topicID = req.params.topicID;
+        // 2 让模型根据话题id去找到要编辑的话题
+        M_topic.findTopicById(topicID, (err, results) => {
+            if (err) {
+                return res.send({
+                    code: 500,
+                    message: err.message
+                });
+            }
+            // 3 渲染edit.html
+            res.render("topic/edit.html", {
+                topic: results[0]
+            });
+        });
+    }
+

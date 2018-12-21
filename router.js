@@ -17,6 +17,8 @@ router
       .post('/creatTopic', c_topic.handleCreatTopic)
       .get('/signout', c_user.signout)
       .get('/topic/detail/:topicID', c_topic.showDetail)
+      .get('/topic/detail/:topicID/delete',c_topic.handleDeleteTopic)
+      .get("/topic/:topicID/edit", c_topic.showEdit);
 //4.将路由对象导出去。
 module.exports = router;
 //在这个时候就需要去前台来修改相应的app木块的内容了。
